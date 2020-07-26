@@ -1,0 +1,20 @@
+[package]
+name = "seabird"
+version = "0.1.0-alpha.0"
+authors = ["Kaleb Elwert <belak@coded.io>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+description = "A simple client library for the seabird-chat ecosystem"
+homepage = "https://github.com/seabird-chat/seabird-rs"
+repository = "https://github.com/seabird-chat/seabird-rs"
+documentation = "https://docs.rs/seabird"
+readme = "README.md"
+
+[dependencies]
+anyhow = "1.0"
+http = "0.2"
+prost = "0.6"
+tonic = { version = "0.3", features = ["tls", "tls-roots"] }
+
+[build-dependencies]
+tonic-build = { version = "0.3", features = ["prost"] }
