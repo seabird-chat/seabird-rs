@@ -10,6 +10,10 @@ repository = "https://github.com/seabird-chat/seabird-rs"
 documentation = "https://docs.rs/seabird"
 readme = "README.md"
 
+[features]
+default = ["rustfmt"]
+rustfmt = ["tonic-build/rustfmt"]
+
 [dependencies]
 anyhow = "1.0"
 http = "0.2"
@@ -18,3 +22,8 @@ tonic = { version = "0.3", features = ["tls", "tls-roots"] }
 
 [build-dependencies]
 tonic-build = { version = "0.3", default-features = false, features = ["prost", "transport"] }
+
+[package.metadata.docs.rs]
+# We need to disable rustfmt for docs.rs because it doesn't have rustfmt
+# installed, causing the build to fail.
+no-default-features = true
