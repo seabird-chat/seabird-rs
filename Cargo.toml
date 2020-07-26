@@ -17,4 +17,4 @@ prost = "0.6"
 tonic = { version = "0.3", features = ["tls", "tls-roots"] }
 
 [build-dependencies]
-tonic-build = { version = "0.3", features = ["prost"] }
+tonic-build = { version = "0.3", default-features = false, features = ["prost", "transport"] }
