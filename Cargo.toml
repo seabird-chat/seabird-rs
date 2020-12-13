@@ -1,6 +1,6 @@
 [package]
 name = "seabird"
-version = "0.1.0-alpha.4"
+version = "0.1.0-alpha.5"
 authors = ["Kaleb Elwert <belak@coded.io>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
