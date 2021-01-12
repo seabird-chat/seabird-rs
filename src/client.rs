@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use anyhow::Context;
 
 use http::Uri;
@@ -59,11 +60,13 @@ impl Client {
         &mut self,
         user_id: impl Into<String>,
         text: impl Into<String>,
+        tags: Option<HashMap<String, String>>,
     ) -> Result<()> {
         self.inner
             .perform_private_action(proto::PerformPrivateActionRequest {
                 user_id: user_id.into(),
                 text: text.into(),
+                tags: tags.unwrap_or_else(|| HashMap::new()),
             })
             .await?;
         Ok(())
@@ -73,11 +76,13 @@ impl Client {
         &mut self,
         channel_id: impl Into<String>,
         text: impl Into<String>,
+        tags: Option<HashMap<String, String>>,
     ) -> Result<()> {
         self.inner
             .perform_action(proto::PerformActionRequest {
                 channel_id: channel_id.into(),
                 text: text.into(),
+                tags: tags.unwrap_or_else(|| HashMap::new()),
             })
             .await?;
         Ok(())
@@ -87,11 +92,13 @@ impl Client {
         &mut self,
         channel_id: impl Into<String>,
         text: impl Into<String>,
+        tags: Option<HashMap<String, String>>,
     ) -> Result<()> {
         self.inner
             .send_message(proto::SendMessageRequest {
                 channel_id: channel_id.into(),
                 text: text.into(),
+                tags: tags.unwrap_or_else(|| HashMap::new()),
             })
             .await?;
         Ok(())
@@ -101,11 +108,13 @@ impl Client {
         &mut self,
         user_id: impl Into<String>,
         text: impl Into<String>,
+        tags: Option<HashMap<String, String>>,
     ) -> Result<()> {
         self.inner
             .send_private_message(proto::SendPrivateMessageRequest {
                 user_id: user_id.into(),
                 text: text.into(),
+                tags: tags.unwrap_or_else(|| HashMap::new()),
             })
             .await?;
         Ok(())
