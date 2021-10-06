@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use anyhow::Context;
+use std::collections::HashMap;
 
 use http::Uri;
 use tonic::{
@@ -17,11 +17,30 @@ pub struct ClientConfig {
     pub token: String,
 }
 
+pub type InnerClient =
+    tonic::codegen::InterceptedService<tonic::transport::Channel, AuthHeaderInterceptor>;
+
 // Client represents the running bot.
 #[derive(Debug)]
 pub struct Client {
     config: ClientConfig,
-    inner: SeabirdClient<tonic::transport::Channel>,
+    inner: SeabirdClient<InnerClient>,
+}
+
+#[derive(Debug)]
+pub struct AuthHeaderInterceptor {
+    auth_header: MetadataValue<Ascii>,
+}
+
+impl tonic::service::Interceptor for AuthHeaderInterceptor {
+    fn call(
+        &mut self,
+        mut req: tonic::Request<()>,
+    ) -> std::result::Result<tonic::Request<()>, tonic::Status> {
+        req.metadata_mut()
+            .insert("authorization", self.auth_header.clone());
+        Ok(req)
+    }
 }
 
 impl Client {
@@ -44,11 +63,7 @@ impl Client {
         let auth_header: MetadataValue<Ascii> = format!("Bearer {}", config.token).parse()?;
 
         let seabird_client =
-            SeabirdClient::with_interceptor(channel, move |mut req: tonic::Request<()>| {
-                req.metadata_mut()
-                    .insert("authorization", auth_header.clone());
-                Ok(req)
-            });
+            SeabirdClient::with_interceptor(channel, AuthHeaderInterceptor { auth_header });
 
         Ok(Client {
             config,
@@ -120,11 +135,11 @@ impl Client {
         Ok(())
     }
 
-    pub fn inner_ref(&self) -> &'_ SeabirdClient<tonic::transport::Channel> {
+    pub fn inner_ref(&self) -> &'_ SeabirdClient<InnerClient> {
         &self.inner
     }
 
-    pub fn inner_mut_ref(&mut self) -> &'_ mut SeabirdClient<tonic::transport::Channel> {
+    pub fn inner_mut_ref(&mut self) -> &'_ mut SeabirdClient<InnerClient> {
         &mut self.inner
     }
 }
