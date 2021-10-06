@@ -4,4 +4,4 @@ mod client;
 pub mod error;
 pub mod proto;
 
-pub use client::{Client, ClientConfig};
+pub use client::{Client, ClientConfig, InnerClient};
