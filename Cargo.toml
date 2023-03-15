@@ -1,8 +1,8 @@
 [package]
 name = "seabird"
-version = "0.2.0-alpha.4"
+version = "0.3.0-alpha.1"
 authors = ["Kaleb Elwert <belak@coded.io>"]
-edition = "2018"
+edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "A simple client library for the seabird-chat ecosystem"
 homepage = "https://github.com/seabird-chat/seabird-rs"
@@ -10,20 +10,11 @@ repository = "https://github.com/seabird-chat/seabird-rs"
 documentation = "https://docs.rs/seabird"
 readme = "README.md"
 
-[features]
-default = ["rustfmt"]
-rustfmt = ["tonic-build/rustfmt"]
-
 [dependencies]
 anyhow = "1.0"
 http = "0.2"
-prost = "0.8"
-tonic = { version = "0.5", features = ["tls", "tls-webpki-roots"] }
+prost = "0.11"
+tonic = { version = "0.8", features = ["tls", "tls-webpki-roots"] }
 
 [build-dependencies]
-tonic-build = { version = "0.5", default-features = false, features = ["prost", "transport"] }
-
-[package.metadata.docs.rs]
-# We need to disable rustfmt for docs.rs because it doesn't have rustfmt
-# installed, causing the build to fail.
-no-default-features = true
+tonic-build = { version = "0.8" }
