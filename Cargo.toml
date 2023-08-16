@@ -18,3 +18,8 @@ tonic = { version = "0.8", features = ["tls", "tls-webpki-roots"] }
 
 [build-dependencies]
 tonic-build = { version = "0.8" }
+
+[features]
+default = ["seabird-client"]
+seabird-client = []
+chat-ingest-client = []
