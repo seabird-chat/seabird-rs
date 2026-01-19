@@ -10,6 +10,40 @@ use tonic::{
 use crate::error::Result;
 use crate::proto;
 
+/// MessageContent represents either plain text or structured blocks for messages.
+#[derive(Debug)]
+pub enum MessageContent {
+    Text(String),
+    Blocks(proto::Block),
+}
+
+impl MessageContent {
+    fn into_inner(self) -> (String, Option<proto::Block>) {
+        match self {
+            MessageContent::Text(text) => (text, None),
+            MessageContent::Blocks(block) => (String::from(""), Some(block)),
+        }
+    }
+}
+
+impl From<String> for MessageContent {
+    fn from(text: String) -> Self {
+        MessageContent::Text(text)
+    }
+}
+
+impl From<&str> for MessageContent {
+    fn from(text: &str) -> Self {
+        MessageContent::Text(text.to_string())
+    }
+}
+
+impl From<proto::Block> for MessageContent {
+    fn from(block: proto::Block) -> Self {
+        MessageContent::Blocks(block)
+    }
+}
+
 #[cfg(feature = "seabird-client")]
 use crate::proto::seabird::seabird_client::SeabirdClient as SeabirdProtoClient;
 
@@ -79,14 +113,16 @@ impl SeabirdClient {
     pub async fn perform_private_action(
         &mut self,
         user_id: impl Into<String>,
-        text: impl Into<String>,
+        content: impl Into<MessageContent>,
         tags: Option<HashMap<String, String>>,
     ) -> Result<()> {
+        let (text, root_block) = content.into().into_inner();
+
         self.inner
             .perform_private_action(proto::PerformPrivateActionRequest {
                 user_id: user_id.into(),
-                text: text.into(),
-                root_block: None,
+                text,
+                root_block,
                 tags: tags.unwrap_or_default(),
             })
             .await?;
@@ -96,14 +132,16 @@ impl SeabirdClient {
     pub async fn perform_action(
         &mut self,
         channel_id: impl Into<String>,
-        text: impl Into<String>,
+        content: impl Into<MessageContent>,
         tags: Option<HashMap<String, String>>,
     ) -> Result<()> {
+        let (text, root_block) = content.into().into_inner();
+
         self.inner
             .perform_action(proto::PerformActionRequest {
                 channel_id: channel_id.into(),
-                text: text.into(),
-                root_block: None,
+                text,
+                root_block,
                 tags: tags.unwrap_or_default(),
             })
             .await?;
@@ -113,14 +151,16 @@ impl SeabirdClient {
     pub async fn send_message(
         &mut self,
         channel_id: impl Into<String>,
-        text: impl Into<String>,
+        content: impl Into<MessageContent>,
         tags: Option<HashMap<String, String>>,
     ) -> Result<()> {
+        let (text, root_block) = content.into().into_inner();
+
         self.inner
             .send_message(proto::SendMessageRequest {
                 channel_id: channel_id.into(),
-                text: text.into(),
-                root_block: None,
+                text,
+                root_block,
                 tags: tags.unwrap_or_default(),
             })
             .await?;
@@ -130,14 +170,16 @@ impl SeabirdClient {
     pub async fn send_private_message(
         &mut self,
         user_id: impl Into<String>,
-        text: impl Into<String>,
+        content: impl Into<MessageContent>,
         tags: Option<HashMap<String, String>>,
     ) -> Result<()> {
+        let (text, root_block) = content.into().into_inner();
+
         self.inner
             .send_private_message(proto::SendPrivateMessageRequest {
                 user_id: user_id.into(),
-                text: text.into(),
-                root_block: None,
+                text,
+                root_block,
                 tags: tags.unwrap_or_default(),
             })
             .await?;
