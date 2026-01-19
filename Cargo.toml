@@ -12,13 +12,14 @@ readme = "README.md"
 
 [dependencies]
 anyhow = "1.0"
-http = "0.2"
-prost = "0.11"
-prost-types = "0.11"
-tonic = { version = "0.8", features = ["tls", "tls-webpki-roots"] }
+http = "1.4"
+prost = "0.14"
+prost-types = "0.14"
+tonic = { version = "0.14", features = ["tls-aws-lc", "tls-webpki-roots"] }
+tonic-prost = "0.14"
 
 [build-dependencies]
-tonic-build = { version = "0.8" }
+tonic-prost-build = { version = "0.14" }
 
 [features]
 default = ["seabird-client"]

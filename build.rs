@@ -13,7 +13,7 @@ fn main() {
     #[cfg(feature = "chat-ingest-client")]
     protos.push("proto/seabird_chat_ingest.proto");
 
-    tonic_build::configure()
-        .compile(&protos, &["proto/"])
+    tonic_prost_build::configure()
+        .compile_protos(&protos, &["proto/"])
         .unwrap();
 }
