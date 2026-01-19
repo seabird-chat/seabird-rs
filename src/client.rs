@@ -86,6 +86,7 @@ impl SeabirdClient {
             .perform_private_action(proto::PerformPrivateActionRequest {
                 user_id: user_id.into(),
                 text: text.into(),
+                root_block: None,
                 tags: tags.unwrap_or_default(),
             })
             .await?;
@@ -102,6 +103,7 @@ impl SeabirdClient {
             .perform_action(proto::PerformActionRequest {
                 channel_id: channel_id.into(),
                 text: text.into(),
+                root_block: None,
                 tags: tags.unwrap_or_default(),
             })
             .await?;
@@ -118,6 +120,7 @@ impl SeabirdClient {
             .send_message(proto::SendMessageRequest {
                 channel_id: channel_id.into(),
                 text: text.into(),
+                root_block: None,
                 tags: tags.unwrap_or_default(),
             })
             .await?;
@@ -134,6 +137,7 @@ impl SeabirdClient {
             .send_private_message(proto::SendPrivateMessageRequest {
                 user_id: user_id.into(),
                 text: text.into(),
+                root_block: None,
                 tags: tags.unwrap_or_default(),
             })
             .await?;
