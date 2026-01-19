@@ -30,7 +30,7 @@ use crate::proto;
 ///     .append(header)
 ///     .append(body);
 /// ```
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct Block {
     children: Vec<proto::Block>,
 }
