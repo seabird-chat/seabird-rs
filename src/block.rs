@@ -86,9 +86,11 @@ impl Block {
         let inner_block = content.into().into();
         self.children.push(proto::Block {
             plain: String::new(),
-            inner: Some(proto::block::Inner::Italics(Box::new(proto::ItalicsBlock {
-                inner: Some(Box::new(inner_block)),
-            }))),
+            inner: Some(proto::block::Inner::Italics(Box::new(
+                proto::ItalicsBlock {
+                    inner: Some(Box::new(inner_block)),
+                },
+            ))),
         });
         self
     }
@@ -98,9 +100,11 @@ impl Block {
         let inner_block = content.into().into();
         self.children.push(proto::Block {
             plain: String::new(),
-            inner: Some(proto::block::Inner::Underline(Box::new(proto::UnderlineBlock {
-                inner: Some(Box::new(inner_block)),
-            }))),
+            inner: Some(proto::block::Inner::Underline(Box::new(
+                proto::UnderlineBlock {
+                    inner: Some(Box::new(inner_block)),
+                },
+            ))),
         });
         self
     }
@@ -110,9 +114,11 @@ impl Block {
         let inner_block = content.into().into();
         self.children.push(proto::Block {
             plain: String::new(),
-            inner: Some(proto::block::Inner::Strikethrough(Box::new(proto::StrikethroughBlock {
-                inner: Some(Box::new(inner_block)),
-            }))),
+            inner: Some(proto::block::Inner::Strikethrough(Box::new(
+                proto::StrikethroughBlock {
+                    inner: Some(Box::new(inner_block)),
+                },
+            ))),
         });
         self
     }
@@ -122,9 +128,11 @@ impl Block {
         let inner_block = content.into().into();
         self.children.push(proto::Block {
             plain: String::new(),
-            inner: Some(proto::block::Inner::Spoiler(Box::new(proto::SpoilerBlock {
-                inner: Some(Box::new(inner_block)),
-            }))),
+            inner: Some(proto::block::Inner::Spoiler(Box::new(
+                proto::SpoilerBlock {
+                    inner: Some(Box::new(inner_block)),
+                },
+            ))),
         });
         self
     }
@@ -134,9 +142,11 @@ impl Block {
         let inner_block = content.into().into();
         self.children.push(proto::Block {
             plain: String::new(),
-            inner: Some(proto::block::Inner::Blockquote(Box::new(proto::BlockquoteBlock {
-                inner: Some(Box::new(inner_block)),
-            }))),
+            inner: Some(proto::block::Inner::Blockquote(Box::new(
+                proto::BlockquoteBlock {
+                    inner: Some(Box::new(inner_block)),
+                },
+            ))),
         });
         self
     }
@@ -186,10 +196,12 @@ impl Block {
         let inner_block = content.into().into();
         self.children.push(proto::Block {
             plain: String::new(),
-            inner: Some(proto::block::Inner::Heading(Box::new(proto::HeadingBlock {
-                level,
-                inner: Some(Box::new(inner_block)),
-            }))),
+            inner: Some(proto::block::Inner::Heading(Box::new(
+                proto::HeadingBlock {
+                    level,
+                    inner: Some(Box::new(inner_block)),
+                },
+            ))),
         });
         self
     }
