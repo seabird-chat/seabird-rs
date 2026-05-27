@@ -171,7 +171,7 @@ impl SeabirdClient {
         match uri.scheme_str() {
             None | Some("https") => {
                 channel_builder =
-                    channel_builder.tls_config(ClientTlsConfig::new().with_webpki_roots())?;
+                    channel_builder.tls_config(ClientTlsConfig::new().with_enabled_roots())?;
             }
             _ => {}
         }
@@ -465,7 +465,7 @@ impl ChatIngestClient {
         match uri.scheme_str() {
             None | Some("https") => {
                 channel_builder =
-                    channel_builder.tls_config(ClientTlsConfig::new().with_webpki_roots())?;
+                    channel_builder.tls_config(ClientTlsConfig::new().with_enabled_roots())?;
             }
             _ => {}
         }
