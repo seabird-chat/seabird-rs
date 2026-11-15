@@ -18,6 +18,18 @@ pub enum MessageContent {
 }
 
 impl MessageContent {
+    /// Builds content from a text and an optional block, as found on events
+    /// and requests.
+    ///
+    /// If a block is present it is used and the text is dropped, since seabird
+    /// re-renders the plain text from the block. Otherwise the text is used.
+    pub fn new(text: impl Into<String>, block: Option<proto::Block>) -> Self {
+        match block {
+            Some(block) => MessageContent::Blocks(block),
+            None => MessageContent::Text(text.into()),
+        }
+    }
+
     /// Converts the message content into its internal representation.
     ///
     /// Returns a tuple of (text, optional block), where text-only messages

@@ -36,7 +36,7 @@ pub mod error;
 pub mod proto;
 
 pub use block::Block;
-pub use client::{ClientConfig, InnerClient};
+pub use client::{ClientConfig, InnerClient, MessageContent};
 
 #[cfg(feature = "seabird-client")]
 pub use client::SeabirdClient;
