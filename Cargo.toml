@@ -18,6 +18,9 @@ prost-types = "0.14"
 tonic = { version = "0.14", features = ["tls-aws-lc", "tls-webpki-roots"] }
 tonic-prost = "0.14"
 
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+
 [build-dependencies]
 tonic-prost-build = { version = "0.14" }
 
